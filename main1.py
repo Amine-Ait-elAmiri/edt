@@ -5,22 +5,6 @@ import os
 from icalendar import Calendar
 from datetime import datetime, timedelta
 import difflib
-import time
-import threading
-
-# Global variable to track the last user command time
-last_command_time = 0
-print_interval = 300  # 5 minutes in seconds
-
-# Function to print a message every 5 minutes unless interrupted by a user command
-def print_every_five_minutes():
-    while True:
-        global last_command_time
-        current_time = time.time()
-        # Check if 5 minutes have passed since the last command
-        if current_time - last_command_time >= print_interval:
-            print("Printed every five minutes")
-        time.sleep(5)  # Check every 5 seconds
 
 help_text = """
 *Comment utiliser le bot :*
@@ -296,10 +280,5 @@ app.add_handler(CommandHandler("start", start))
 
 # Add callback query handler for button clicks
 app.add_handler(CallbackQueryHandler(handle_button_click))
-
-# Start the background thread for printing every 5 minutes
-thread = threading.Thread(target=print_every_five_minutes)
-thread.daemon = True  # Ensure the thread closes when the main program exits
-thread.start()
 
 app.run_polling()
